@@ -1,0 +1,1101 @@
+var X = Object.defineProperty;
+var ee = (n,s,e)=>s in n ? X(n, s, {
+    enumerable: !0,
+    configurable: !0,
+    writable: !0,
+    value: e
+}) : n[s] = e;
+var f = (n,s,e)=>(ee(n, typeof s != "symbol" ? s + "" : s, e),
+e);
+import {R as D, v as C, j as o, D as z, x as p, A as M, ch as te, n as y, a1 as $, e as m, cg as H, p as se, F as J, J as x, H as ne, M as K, u as ie, c1 as oe, ai as g, aa as ae, G as I, aU as V, aV as le, aZ as ue} from "./chunk-9c2d072b.js";
+import "./chunk-51128912.js";
+import {u as w, a as ce} from "./chunk-ed52ab75.js";
+import {$ as E, m as O, a as F, c as de, w as L} from "./chunk-ba51a7cc.js";
+import {G as re, q as me, p as he, b as fe, A as ge, c as pe, r as be, d as ye, f as Ae, h as Ie, g as ve, i as Ne, S as Be} from "./chunk-35a28356.js";
+import {ak as Q} from "./chunk-2cd3ba4a.js";
+import {s as _} from "./chunk-44117d6b.js";
+import {i as T} from "./chunk-57893829.js";
+import {G as b} from "./chunk-a41f28aa.js";
+import "./chunk-c3a08f60.js";
+import "./chunk-0507e690.js";
+import "./chunk-d5187d4f.js";
+import "./chunk-bb50add8.js";
+import "./chunk-8231612c.js";
+import "./chunk-9663787f.js";
+import "./chunk-da5aeb45.js";
+import "./chunk-f625147a.js";
+import "./chunk-d612c08a.js";
+import "./chunk-ee3fd60b.js";
+import "./chunk-ddbb4074.js";
+import "./chunk-9cf93aef.js";
+import "./chunk-c7a72826.js";
+import "./chunk-2f4f8fb9.js";
+import "./chunk-fbc48f23.js";
+import "./chunk-ca54aeff.js";
+const we = D.memo(({gameInfo: n})=>{
+    const s = C();
+    return o(z, {
+        title: s("common.game_intro"),
+        children: o(re, {
+            children: p("div", {
+                className: "item",
+                children: [o("h2", {
+                    children: "What Is Mines?"
+                }), o("div", {
+                    className: "content",
+                    children: n.details.split(`
+`).map((e,t)=>o("p", {
+                        children: `${e}`
+                    }, t.toString()))
+                }), o("h2", {
+                    children: "How to Play Mines?"
+                }), p("div", {
+                    className: "content",
+                    children: [o("p", {
+                        children: "1. Select the number of mines you wish to place for the round. "
+                    }), o("p", {
+                        children: "2. Press BET button to start the round. "
+                    }), o("p", {
+                        children: "3. Each gem revealed will increase the payout multiplier."
+                    }), o("p", {
+                        children: "4. Cash out any point to win at the last multiplier displayed."
+                    }), o("p", {
+                        children: "5. If a mine is revealed, the game is ended and your wager is lost."
+                    }), o("p", {
+                        children: "6. You may set more mines to increase multipliers on each gem revealed."
+                    })]
+                }), o("h2", {
+                    children: "What is the House Edge of Mines?"
+                }), o("div", {
+                    className: "content",
+                    children: o("p", {
+                        children: "1% HouseEdge."
+                    })
+                })]
+            })
+        })
+    })
+}
+);
+const Ge = D.memo(function({radius: s="0", duration: e=2e3, count: t=0}) {
+    return o("div", {
+        className: Me,
+        style: {
+            borderRadius: s
+        },
+        children: o("div", {
+            className: "sp-before",
+            style: {
+                animation: `lightMove ${e + "ms"} ease ${t > 0 ? t : "infinite"}`
+            }
+        })
+    })
+})
+  , Me = "eyuabtp";
+function Se({index: n}) {
+    var r;
+    const s = w()
+      , e = ((r = s.guessQueue.find(c=>c.index === n)) == null ? void 0 : r.status) === Y.PENDING
+      , t = s.rounds.find(c=>c.field === n + 1)
+      , a = te(({hovering: c})=>{
+        c && s.isBetting && !s.isAutoMode && (s.sounds.stopSound("hover"),
+        s.sounds.playSound("hover")),
+        c && s.isAutoMode && !s.isBetting && (s.sounds.stopSound("hover"),
+        s.sounds.playSound("hover"))
+    }
+    );
+    function i() {
+        return t && t.status === v.GEMS ? o(xe, {}) : t && t.status === v.MINES ? o(Ee, {}) : t && t.status === v.HIDE_GEMS ? o("div", {
+            className: y(N, Oe)
+        }) : t && t.status === v.HIDE_MINES ? o(Ce, {}) : s.isAutoMode && s.selectedItems.includes(n) ? o("div", {
+            className: y(N, De)
+        }) : o("div", {
+            className: N,
+            ...a()
+        })
+    }
+    function l() {
+        let c = ["grid-item"];
+        return e && c.push("loading"),
+        t && [v.HIDE_MINES, v.HIDE_GEMS].includes(t.status) && c.push("unselected"),
+        c.join(" ")
+    }
+    function u() {
+        return s.isAutoMode ? s.isBetting : !s.isBetting || !!e || !!t
+    }
+    return o("button", {
+        disabled: u(),
+        className: y(Re, l()),
+        onClick: ()=>s.handleItemClick(n),
+        children: i()
+    })
+}
+const ke = M(Se);
+function xe() {
+    const n = $()
+      , [s,e] = m.exports.useState(!0);
+    return m.exports.useEffect(()=>{
+        let t = setInterval(()=>{
+            e(a=>!a)
+        }
+        , 3e3);
+        return ()=>{
+            clearInterval(t)
+        }
+    }
+    , []),
+    p("div", {
+        className: y(N, _e),
+        children: [o("div", {
+            className: y(N, "graph")
+        }), s && o(Ge, {
+            count: 1,
+            radius: n ? H(3) : H(4)
+        })]
+    })
+}
+function Ee() {
+    const [n,s] = m.exports.useState(!1)
+      , t = `mines ${m.exports.useRef(B(1, 4)).current}`;
+    return o("div", {
+        className: y(N, Ve, "effect", n && "end", t),
+        onAnimationEnd: ()=>s(!0)
+    })
+}
+function Ce() {
+    const s = `mines ${m.exports.useRef(B(1, 4)).current}`;
+    return o("div", {
+        className: y(N, s)
+    })
+}
+const N = "ijs3x0w"
+  , Oe = "u752x63"
+  , Ve = "s26pbm1"
+  , _e = "s1kc2wgb"
+  , De = "s1i99vqg"
+  , Re = "g134a2as";
+function je() {
+    const n = w()
+      , [s,e] = me()
+      , [t,a] = m.exports.useState(n.isBetting ? null : {
+        currencyName: n.currencyName,
+        odds: n.currentOdds.toNumber(),
+        amount: n.amount.toNumber()
+    })
+      , [i,l] = m.exports.useState(!1);
+    let u;
+    m.exports.useEffect(()=>(t ? (n.currentOdds.toNumber() > 1 && e({
+        profitAmount: t.odds * t.amount,
+        currencyName: t.currencyName,
+        odds: +t.odds.toFixed(2),
+        isBigWin: !1,
+        enableSound: n.settings.soundEnable
+    }),
+    n.isAutoMode && (u = window.setTimeout(()=>{
+        n.autoBet.isRunning || (e(null),
+        n.resetStatus())
+    }
+    , 1e3))) : (e(null),
+    u && window.clearTimeout(u)),
+    ()=>{
+        u && clearTimeout(u)
+    }
+    ), [t]),
+    m.exports.useEffect(()=>{
+        e(null)
+    }
+    , [n.isAutoMode]),
+    m.exports.useEffect(()=>{
+        n.isBetting && l(!0);
+        let c = setTimeout(()=>{
+            l(!1)
+        }
+        , 300);
+        return ()=>{
+            clearTimeout(c)
+        }
+    }
+    , [n.isBetting]),
+    m.exports.useEffect(()=>{
+        const c = ()=>{
+            a(null)
+        }
+          , d = S=>{
+            a({
+                ...S,
+                amount: S.amount.toNumber()
+            })
+        }
+        ;
+        return n.on("betStart", c),
+        n.on("betEnd", d),
+        ()=>{
+            n.off("betStart", c),
+            n.off("betEnd", d)
+        }
+    }
+    , []);
+    const r = Array(n.grids).fill(1);
+    return p("div", {
+        className: y(Fe, "mine-stage"),
+        children: [s, o("div", {
+            className: `grids-wrap ${i ? "animate" : ""}`,
+            children: r.map((c,d)=>o(ke, {
+                index: d
+            }, d))
+        }), o($e, {})]
+    })
+}
+function $e() {
+    const [n,s] = m.exports.useState(()=>[B(0, 3)]);
+    return m.exports.useEffect(()=>{
+        let e = setInterval(async()=>{
+            let t = B(1, 3)
+              , a = Array(t).fill(1).map(()=>B(1, 40) % 4);
+            s([]),
+            await se(500),
+            s(a)
+        }
+        , 5e3);
+        return ()=>{
+            clearInterval(e)
+        }
+    }
+    , []),
+    p("div", {
+        className: He,
+        children: [o("div", {
+            className: `${n.includes(1) ? "active " : ""} star-item index1`
+        }), o("div", {
+            className: `${n.includes(2) ? "active " : ""} star-item index2`
+        }), o("div", {
+            className: `${n.includes(3) ? "active " : ""} star-item index3`
+        }), o("div", {
+            className: `${n.includes(0) ? "active " : ""} star-item index4`
+        })]
+    })
+}
+const We = M(je)
+  , He = "f17ggpsn"
+  , Fe = "g1p2o5oh";
+const Le = ()=>{
+    const n = w()
+      , s = _.useSingleDetail();
+    return p(J, {
+        children: [o(he, {
+            list: n.myBets,
+            keyof: "betId",
+            onDetail: s
+        }), o(fe, {
+            className: Te,
+            children: o(We, {})
+        })]
+    })
+}
+  , Qe = M(Le)
+  , Te = "grv1u1g";
+function Pe() {
+    const n = C()
+      , s = w()
+      , e = $();
+    return p("div", {
+        className: Ue,
+        children: [e && p(J, {
+            children: [o(P, {}), s.isBetting && o(x, {
+                className: "pick-button",
+                type: "gray",
+                size: "big",
+                disabled: !s.isBetting,
+                onClick: ()=>s.pickTile(),
+                children: n("game.mines.pick")
+            })]
+        }), o(b.CoinInput, {
+            checkIncrease: !0
+        }), o(b.LabelSelect, {
+            label: n("game.mines.mines"),
+            disabled: s.isBetting,
+            value: s.mines,
+            options: s.minesOptions,
+            onChange: t=>s.handleMinesChange(t)
+        }), s.isBetting && p("div", {
+            className: "preview-wrap",
+            children: [o(ne, {
+                label: n("game.mines.gems"),
+                value: s.gems,
+                readOnly: !0,
+                size: "small"
+            }), o(Q, {
+                label: n("game.mines.profit_next") + `(${s.nextOdds.sub(1).add(s.currentOdds).toFixed(2)}x)`,
+                value: s.amount.mul(s.nextOdds.sub(1).add(s.currentOdds).toFixed(2)).toNumber(),
+                currencyName: s.currencyName,
+                size: "small",
+                readOnly: !0,
+                onChange: ()=>{}
+            }), o(Q, {
+                label: n("common.total_profit") + `(${s.currentOdds.toFixed(2)}x)`,
+                value: s.amount.mul(s.currentOdds.toFixed(2)).toNumber(),
+                currencyName: s.currencyName,
+                size: "small",
+                readOnly: !0,
+                onChange: ()=>{}
+            }), !e && o(x, {
+                className: "pick-button",
+                type: "gray",
+                size: "big",
+                disabled: !s.isBetting,
+                onClick: ()=>s.pickTile(),
+                children: n("game.mines.pick")
+            })]
+        }), !e && o(P, {})]
+    })
+}
+const P = M(function() {
+    const s = C()
+      , e = w();
+    async function t() {
+        e.handleBet().catch(a=>{
+            K(a)
+        }
+        )
+    }
+    return e.isBetting ? o(x, {
+        className: "bet-button cashout-btn",
+        type: "conic",
+        size: "big",
+        disabled: !e.canCashout,
+        onClick: e.cashout,
+        children: "Cashout"
+    }) : o(x, {
+        className: "bet-button",
+        size: "big",
+        type: "conic",
+        onClick: t,
+        children: s("common.bet")
+    })
+})
+  , qe = M(Pe)
+  , Ue = "m5uw8gz";
+const ze = M(function() {
+    const s = w()
+      , e = $()
+      , t = C()
+      , a = ()=>o(x, {
+        className: "bet-button",
+        type: "conic",
+        size: "big",
+        disabled: !s.selectedItems.length,
+        onClick: ()=>{
+            s.autoBet.isRunning ? s.autoBet.stop() : s.autoBet.start().catch(K)
+        }
+        ,
+        children: s.autoBet.isRunning ? t("common.stop_auto_bet") : t("common.start_auto_bet")
+    });
+    return p("div", {
+        className: y(Je, "game-form"),
+        children: [e && a(), o(b.CoinInput, {
+            checkIncrease: !0
+        }), o(b.LabelSelect, {
+            label: t("game.mines.mines"),
+            disabled: s.isBetting,
+            value: s.mines,
+            options: s.minesOptions,
+            onChange: i=>s.handleMinesChange(i)
+        }), o(b.TimesInput, {}), o(b.IncreaseInput, {}), o(b.StopInput, {}), o(b.IncreaseInput, {
+            isLose: !0
+        }), o(b.StopInput, {
+            isLose: !0
+        }), o(ge, {}), !e && a()]
+    })
+})
+  , Je = "a23thc";
+const Ke = D.memo(()=>{
+    const n = C()
+      , s = w()
+      , e = ce().gameInfo.read()
+      , t = s.config.fairComponent
+      , a = [{
+        title: n("common.game_intro"),
+        node: o(we, {
+            gameInfo: e
+        })
+    }, {
+        title: n("common.fairness"),
+        node: o(z, {
+            title: n("common.fairness"),
+            children: o(t, {})
+        })
+    }];
+    return o(pe, {
+        manualControl: o(qe, {}),
+        className: Ye,
+        autoControl: o(ze, {}),
+        gameView: o(Qe, {}),
+        tabs: [{
+            label: n("common.all_bet"),
+            value: _.AllBet
+        }, {
+            label: n("common.my_bet"),
+            value: _.MyBet
+        }],
+        actions: [o(be, {}), o(ye, {}), o(Ae, {}), o(Ie, {}), o(ve, {}), o(Ne, {
+            list: a
+        })]
+    })
+}
+)
+  , Ye = "m1x73gbt";
+const Ze = (n,s,e,t,a)=>{
+    const i = a.betLog.bv.mines || "1";
+    ie(`#/mines_help/validate/${n}/${s}/${e}/${i}`)
+}
+  , Xe = _.withSingleDetail({
+    onValidate: Ze,
+    result: ({betLog: n})=>{
+        const s = n.gv
+          , e = n.bv
+          , t = s.cards.slice(0, e.mines)
+          , a = s.fields;
+        return o("div", {
+            className: et,
+            children: s.cards.sort((i,l)=>i - l).map(i=>o("div", {
+                className: "result-item",
+                children: a.includes(i) ? o("div", {
+                    className: t.includes(i) ? "mines" : "gems"
+                }) : null
+            }, i))
+        })
+    }
+})
+  , et = "rwyehsf"
+  , tt = D.memo(function({bodyLock: n}) {
+    return o(oe, {
+        htmlName: "mines",
+        bodyLock: n
+    })
+})
+  , A = E.Reader
+  , R = E.Writer
+  , j = E.util
+  , h = E.roots.gameMine || (E.roots.gameMine = {});
+h.BetValue = (()=>{
+    function n(s) {
+        if (s)
+            for (let e = Object.keys(s), t = 0; t < e.length; ++t)
+                s[e[t]] != null && (this[e[t]] = s[e[t]])
+    }
+    return n.prototype.mines = 0,
+    n.encode = function(e, t) {
+        return t || (t = R.create()),
+        e.mines != null && Object.hasOwnProperty.call(e, "mines") && t.uint32(8).sint32(e.mines),
+        t
+    }
+    ,
+    n.decode = function(e, t) {
+        e instanceof A || (e = A.create(e));
+        let a = t === void 0 ? e.len : e.pos + t
+          , i = new h.BetValue;
+        for (; e.pos < a; ) {
+            let l = e.uint32();
+            switch (l >>> 3) {
+            case 1:
+                i.mines = e.sint32();
+                break;
+            default:
+                e.skipType(l & 7);
+                break
+            }
+        }
+        return i
+    }
+    ,
+    n
+}
+)();
+h.GameValue = (()=>{
+    function n(s) {
+        if (this.fields = [],
+        this.cards = [],
+        s)
+            for (let e = Object.keys(s), t = 0; t < e.length; ++t)
+                s[e[t]] != null && (this[e[t]] = s[e[t]])
+    }
+    return n.prototype.odds = 0,
+    n.prototype.fields = j.emptyArray,
+    n.prototype.cards = j.emptyArray,
+    n.encode = function(e, t) {
+        if (t || (t = R.create()),
+        e.odds != null && Object.hasOwnProperty.call(e, "odds") && t.uint32(9).double(e.odds),
+        e.fields != null && e.fields.length) {
+            t.uint32(18).fork();
+            for (let a = 0; a < e.fields.length; ++a)
+                t.sint32(e.fields[a]);
+            t.ldelim()
+        }
+        if (e.cards != null && e.cards.length) {
+            t.uint32(26).fork();
+            for (let a = 0; a < e.cards.length; ++a)
+                t.sint32(e.cards[a]);
+            t.ldelim()
+        }
+        return t
+    }
+    ,
+    n.decode = function(e, t) {
+        e instanceof A || (e = A.create(e));
+        let a = t === void 0 ? e.len : e.pos + t
+          , i = new h.GameValue;
+        for (; e.pos < a; ) {
+            let l = e.uint32();
+            switch (l >>> 3) {
+            case 1:
+                i.odds = e.double();
+                break;
+            case 2:
+                if (i.fields && i.fields.length || (i.fields = []),
+                (l & 7) === 2) {
+                    let u = e.uint32() + e.pos;
+                    for (; e.pos < u; )
+                        i.fields.push(e.sint32())
+                } else
+                    i.fields.push(e.sint32());
+                break;
+            case 3:
+                if (i.cards && i.cards.length || (i.cards = []),
+                (l & 7) === 2) {
+                    let u = e.uint32() + e.pos;
+                    for (; e.pos < u; )
+                        i.cards.push(e.sint32())
+                } else
+                    i.cards.push(e.sint32());
+                break;
+            default:
+                e.skipType(l & 7);
+                break
+            }
+        }
+        return i
+    }
+    ,
+    n
+}
+)();
+h.Next = (()=>{
+    function n(s) {
+        if (this.fields = [],
+        s)
+            for (let e = Object.keys(s), t = 0; t < e.length; ++t)
+                s[e[t]] != null && (this[e[t]] = s[e[t]])
+    }
+    return n.prototype.fields = j.emptyArray,
+    n.encode = function(e, t) {
+        if (t || (t = R.create()),
+        e.fields != null && e.fields.length) {
+            t.uint32(10).fork();
+            for (let a = 0; a < e.fields.length; ++a)
+                t.sint32(e.fields[a]);
+            t.ldelim()
+        }
+        return t
+    }
+    ,
+    n.decode = function(e, t) {
+        e instanceof A || (e = A.create(e));
+        let a = t === void 0 ? e.len : e.pos + t
+          , i = new h.Next;
+        for (; e.pos < a; ) {
+            let l = e.uint32();
+            switch (l >>> 3) {
+            case 1:
+                if (i.fields && i.fields.length || (i.fields = []),
+                (l & 7) === 2) {
+                    let u = e.uint32() + e.pos;
+                    for (; e.pos < u; )
+                        i.fields.push(e.sint32())
+                } else
+                    i.fields.push(e.sint32());
+                break;
+            default:
+                e.skipType(l & 7);
+                break
+            }
+        }
+        return i
+    }
+    ,
+    n
+}
+)();
+h.CashoutValue = (()=>{
+    function n(s) {
+        if (s)
+            for (let e = Object.keys(s), t = 0; t < e.length; ++t)
+                s[e[t]] != null && (this[e[t]] = s[e[t]])
+    }
+    return n.prototype.frontgroundId = 0,
+    n.encode = function(e, t) {
+        return t || (t = R.create()),
+        e.frontgroundId != null && Object.hasOwnProperty.call(e, "frontgroundId") && t.uint32(120).sint32(e.frontgroundId),
+        t
+    }
+    ,
+    n.decode = function(e, t) {
+        e instanceof A || (e = A.create(e));
+        let a = t === void 0 ? e.len : e.pos + t
+          , i = new h.CashoutValue;
+        for (; e.pos < a; ) {
+            let l = e.uint32();
+            switch (l >>> 3) {
+            case 15:
+                i.frontgroundId = e.sint32();
+                break;
+            default:
+                e.skipType(l & 7);
+                break
+            }
+        }
+        return i
+    }
+    ,
+    n
+}
+)();
+const st = "/assets/bg.136f0468.png"
+  , nt = "/assets/bg-w.5b09b45e.png"
+  , it = "/assets/bg-m.2dee6492.png"
+  , ot = "/assets/bg-m-w.7860475f.png"
+  , at = "/assets/box-bg1.20f61ae1.png"
+  , lt = "/assets/box-bg2.75183067.png"
+  , ut = "/assets/box-bg1-w.03caccb5.png"
+  , ct = "/assets/box-bg2-w.774c3cf2.png"
+  , dt = "/assets/gems.f2815a6d.png"
+  , rt = "/assets/mines-1.33624994.png"
+  , mt = "/assets/mines-2.a6f64284.png"
+  , ht = "/assets/mines-3.b54d60a7.png"
+  , ft = "/assets/mines-4.8900a7b8.png"
+  , gt = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAAXNSR0IArs4c6QAAAJFJREFUGBljYEAD////5wLieDRhTC5QUSkQn8KUQRIBKuAG4ldADALySFIMTCAOUJARiMWAzCogFgWJAUEUhIKSQAUhQPwCiLGBo0DBOCDmYGJkZFwD1KMFxH1A/BOqH0S9AOJ7QMwIxHxAjABAnVVQY48gRLGwgIp0oAojsEijCgEVgtzFiiqKhQdUpIhFmAEAiABrq/Lg4u0AAAAASUVORK5CYII="
+  , pt = "/assets/mines-effect.905a1992.png"
+  , bt = "/assets/bet.42530855.mp3"
+  , yt = "/assets/sound_mines.50ef3b60.mp3"
+  , At = "/assets/sound_gems.08dbc6e7.mp3"
+  , It = "/assets/sound_hover.61e50321.mp3"
+  , vt = "/assets/sound_bg.663fffac.mp3"
+  , k = {
+    bg: st,
+    bgWhite: nt,
+    bgMobile: it,
+    bgMobileWhite: ot,
+    boxBg1: at,
+    boxBg1White: ut,
+    boxBg2: lt,
+    boxBg2White: ct,
+    gems: dt,
+    mines1: rt,
+    mines2: mt,
+    mines3: ht,
+    mines4: ft,
+    minesEffect: pt,
+    minesStar: gt,
+    soundBet: bt,
+    soundMines: yt,
+    soundGems: At,
+    soundHover: It,
+    soundBG: vt
+};
+var v = (n=>(n[n.MINES = 0] = "MINES",
+n[n.GEMS = 1] = "GEMS",
+n[n.HIDE_MINES = 2] = "HIDE_MINES",
+n[n.HIDE_GEMS = 3] = "HIDE_GEMS",
+n))(v || {})
+  , Y = (n=>(n.PENDING = "pending",
+n.FULFILLED = "fulfilled",
+n.REJECTED = "rejected",
+n))(Y || {});
+const q = O.encode(h.CashoutValue)
+  , Nt = O.encode(h.BetValue)
+  , U = O.encode(h.Next)
+  , Bt = O.decode(h.BetValue)
+  , G = O.decode(h.GameValue);
+function B(n, s) {
+    return Math.floor(Math.random() * (s - n + 1) + n)
+}
+class wt extends Be {
+    constructor() {
+        super({
+            name: "Mines",
+            namespace: "/g/mines",
+            sounds: {
+                bet: k.soundBet,
+                mines: k.soundMines,
+                gems: k.soundGems,
+                hover: k.soundHover,
+                bg: {
+                    src: k.soundBG,
+                    loop: !0,
+                    isBackground: !0
+                }
+            },
+            fairComponent: tt,
+            detailComponent: Xe,
+            validateLink: "#/mines_help/validate"
+        }, Ke);
+        f(this, "rounds", []);
+        f(this, "odds", 0);
+        f(this, "guessing", !1);
+        f(this, "DP", 15);
+        f(this, "grids", 25);
+        f(this, "minesOptions");
+        f(this, "mines", 1);
+        f(this, "selectedItems", []);
+        f(this, "guessQueue", []);
+        f(this, "currentOdds", new g(1));
+        ae(this, {
+            rounds: I,
+            odds: I,
+            guessing: I,
+            mines: I,
+            selectedItems: I,
+            guessQueue: I,
+            currentOdds: I,
+            gems: V,
+            canCashout: V,
+            nextOdds: V,
+            isAutoMode: V
+        }),
+        this.autoBet.interval = 2e3,
+        this.minesOptions = Array(this.grids - 1).fill(1).map((t,a)=>({
+            label: String(a + 1),
+            value: a + 1,
+            index: a
+        })),
+        this.cashout = this.cashout.bind(this),
+        this.handleItemClick = this.handleItemClick.bind(this),
+        this.pickTile = this.pickTile.bind(this),
+        this.socket.on("connect", ()=>this.join()),
+        F.waitLogin().then(()=>this.join()),
+        this.addHotkey("w", this.cashout, "Cashout"),
+        this.addHotkey("p", this.pickTile, "Pick a Tile"),
+        de.isMobile() && (this.settings.hotkeyEnable = !1),
+        this.on("submitItem", this.handleNext),
+        le(()=>{
+            this.isAutoMode ? this.resetStatus() : this.resetStatus()
+        }
+        );
+        const e = this.hotkeyList.find(t=>t.key == "space");
+        e && (e.handler = ()=>{
+            if (this.controlIdx === 1)
+                this.autoBet.isRunning ? this.autoBet.stop() : this.selectedItems.length > 0 && this.autoBet.start();
+            else {
+                if (this.isBetting)
+                    return !1;
+                this.handleBet()
+            }
+            return !1
+        }
+        )
+    }
+    get gems() {
+        return this.grids - this.mines - this.rounds.length
+    }
+    get canCashout() {
+        return this.rounds.length >= 1
+    }
+    get nextOdds() {
+        let e, t = this.grids - this.rounds.length;
+        return this.rounds.length ? e = g.div(t, this.gems).mul(this.currentOdds).sub(this.currentOdds).add(1).toDP(this.DP) : e = g.div(this.grids, this.gems).mul(.99).toDP(this.DP),
+        e
+    }
+    get isAutoMode() {
+        return this.controlIdx === 1
+    }
+    hotkeyBet() {
+        ue(()=>{
+            this.isBetting || this.handleBet()
+        }
+        , 100)
+    }
+    pickTile() {
+        if (!this.canGuess())
+            return;
+        const e = this.rounds.map(a=>a.field);
+        let t = B(1, this.grids);
+        for (; e.includes(t); )
+            t = B(1, this.grids);
+        this.handleItemClick(t - 1)
+    }
+    handleMinesChange(e) {
+        this.mines = e,
+        this.isAutoMode && this.selectedItems.length > this.gems && this.selectedItems.splice(0, this.selectedItems.length)
+    }
+    handleItemClick(e) {
+        this.isAutoMode ? this.chooseItem(e) : this.addGuessQueue(e)
+    }
+    resetStatus() {
+        this.rounds = [],
+        this.guessQueue = []
+    }
+    chooseItem(e) {
+        if (this.selectedItems.includes(e)) {
+            let t = this.selectedItems.indexOf(e);
+            this.selectedItems.splice(t, 1)
+        } else
+            this.selectedItems.length < this.grids - this.mines && this.selectedItems.push(e)
+    }
+    updateOdds() {
+        this.rounds.length ? this.currentOdds = g.sub(this.grids, this.rounds.length).div(this.gems).mul(this.currentOdds).toDP(this.DP) : this.currentOdds = this.nextOdds
+    }
+    addGuessQueue(e, t=0) {
+        let a = {};
+        a.promise = new Promise((i,l)=>{
+            a.index = e,
+            a.status = "pending",
+            a.resolve = ()=>{
+                let u = this.guessQueue.find(r=>r.index === e);
+                u && (u.status = "fulfilled"),
+                i(a.index)
+            }
+            ,
+            a.reject = ()=>{
+                a.timmer && clearTimeout(a.timmer);
+                let u = this.guessQueue.find(r=>r.index === e);
+                u && (u.status = "rejected"),
+                l()
+            }
+            ,
+            a.timmer = setTimeout(()=>{
+                this.emit("submitItem", e)
+            }
+            , t)
+        }
+        ).catch(i=>i),
+        this.guessQueue.push(a)
+    }
+    betValue() {
+        return Nt({
+            mines: this.mines
+        })
+    }
+    canGuess() {
+        return this.isBetting && !this.guessing
+    }
+    async join() {
+        if (!this.isActived || !F.login)
+            return;
+        let e = await this.socketRequest("join").then(this.betResultDecoder)
+          , t = G(e.gameValue)
+          , a = Bt(e.betValue);
+        if (e.odds > 0) {
+            this.mines = a.mines,
+            this.currentOdds = new g(t.odds),
+            this.guessing = !1,
+            this.setBetStatus(!0);
+            let i = this.getBetlog(e);
+            t.fields.length > 0 ? (this.currencyName = i.currencyName,
+            setTimeout(()=>this.amount = new g(i.betAmount), 100)) : this.resetStatus();
+            try {
+                await this.bet(new g(i.betAmount), i),
+                this.setBetStatus(!1)
+            } catch {
+                console.log("join error"),
+                this.setBetStatus(!1)
+            }
+        }
+    }
+    updateGrids(e, t) {
+        let a = e.slice(0, this.mines)
+          , i = e.slice(this.mines, this.grids)
+          , l = a.filter(d=>!t.includes(d))
+          , r = i.filter(d=>!t.includes(d)).map(d=>({
+            field: d,
+            status: 3
+        }))
+          , c = l.map(d=>({
+            field: d,
+            status: 2
+        }));
+        this.rounds.push(...r, ...c)
+    }
+    async handleNext(e) {
+        const t = this.guessQueue.find(i=>i.index === e)
+          , a = e + 1;
+        if (!this.guessing && (t == null ? void 0 : t.status) === "pending") {
+            this.guessing = !0;
+            try {
+                const i = await this.socketRequest("next", U({
+                    fields: [a]
+                })).then(G);
+                let l = {
+                    field: a,
+                    status: 1
+                };
+                this.currentOdds = new g(i.odds),
+                this.odds = i.odds,
+                i.odds !== 0 ? (this.rounds.push(l),
+                this.sounds.playSound("gems"),
+                t == null || t.resolve(e),
+                i.cards.length && (this.updateGrids(i.cards, i.fields),
+                this.emit("end", {
+                    odds: i.odds,
+                    winAmount: this.amount.mul(i.odds).toNumber()
+                }))) : (l.status = 0,
+                this.rounds.push(l),
+                this.sounds.playSound("mines"),
+                t == null || t.resolve(e),
+                this.guessQueue.filter(u=>u.status === "pending").forEach(u=>u.reject()),
+                this.updateGrids(i.cards, i.fields),
+                this.emit("end", {
+                    odds: 0,
+                    winAmount: 0
+                }))
+            } catch (i) {
+                console.log("bet error", i),
+                t == null || t.reject(),
+                this.join()
+            } finally {
+                this.guessing = !1;
+                const i = this.guessQueue.find(l=>l.status === "pending");
+                i && this.handleNext(i.index)
+            }
+        }
+    }
+    async handleAutoNext() {
+        if (!this.guessing) {
+            this.guessing = !0;
+            try {
+                const e = await this.socketRequest("next", U({
+                    fields: this.selectedItems.map(t=>t + 1)
+                })).then(G);
+                if (this.currentOdds = new g(e.odds),
+                this.odds = e.odds,
+                e.odds !== 0)
+                    if (e.cards.length)
+                        this.rounds = this.selectedItems.map(t=>({
+                            field: t + 1,
+                            status: 1
+                        })),
+                        this.updateGrids(e.cards, e.fields),
+                        this.emit("end", {
+                            odds: e.odds,
+                            winAmount: this.amount.mul(e.odds).toNumber()
+                        });
+                    else {
+                        const t = await this.socketRequest("cashout", q({
+                            frontgroundId: this.txId
+                        })).then(this.betResultDecoder);
+                        let {odds: a, winAmount: i, currencyName: l} = t
+                          , u = G(t.gameValue);
+                        a /= this.oddsScale;
+                        const r = L.bn2amount(i, l);
+                        this.rounds = this.selectedItems.map(c=>({
+                            field: c + 1,
+                            status: 1
+                        })),
+                        this.updateGrids(u.cards, u.fields),
+                        this.emit("end", {
+                            odds: a,
+                            winAmount: r
+                        })
+                    }
+                else {
+                    let t = e.cards.slice(0, this.mines);
+                    this.rounds = this.selectedItems.map(a=>{
+                        let i = a + 1;
+                        return {
+                            field: i,
+                            status: t.includes(i) ? 0 : 1
+                        }
+                    }
+                    ),
+                    this.updateGrids(e.cards, e.fields),
+                    this.emit("end", {
+                        odds: 0,
+                        winAmount: 0
+                    })
+                }
+            } catch (e) {
+                console.log("bet error", e),
+                this.join()
+            } finally {
+                this.guessing = !1
+            }
+        }
+    }
+    async cashout() {
+        if (!(!this.canGuess() || !this.canCashout)) {
+            this.guessing = !0;
+            try {
+                const e = await this.socketRequest("cashout", q({
+                    frontgroundId: this.txId
+                })).then(this.betResultDecoder);
+                let {odds: t, winAmount: a, currencyName: i} = e
+                  , l = G(e.gameValue);
+                t /= this.oddsScale;
+                const u = L.bn2amount(a, i);
+                this.rounds.length !== l.fields.length && (console.log("cashout update"),
+                this.isAutoMode || this.join()),
+                this.updateGrids(l.cards, l.fields),
+                this.emit("end", {
+                    odds: t,
+                    winAmount: u
+                })
+            } catch {
+                console.log("cashout error")
+            } finally {
+                this.guessing = !1
+            }
+        }
+    }
+    async bet(e=this.amount, t=0) {
+        if (this.resetStatus(),
+        T(t)) {
+            this.sounds.playSound("bet"),
+            this.guessing = !0;
+            try {
+                let c = this.betRequest(e, this.betValue(), t);
+                this.onBetRequest && (c = this.onBetRequest(c)),
+                t = await c,
+                this.currentOdds = new g(1),
+                this.odds = t.odds
+            } finally {
+                T(t) && this.join(),
+                this.guessing = !1
+            }
+        }
+        G(t.gameValue).fields.forEach(c=>{
+            this.rounds.push({
+                field: c,
+                status: 1
+            })
+        }
+        );
+        let {odds: i, winAmount: l} = await new Promise((c,d)=>{
+            const S = Z=>{
+                this.removeListener("deactivate", W),
+                c(Z)
+            }
+              , W = ()=>{
+                this.removeListener("end", S),
+                d()
+            }
+            ;
+            this.once("end", S),
+            this.once("deactivate", W),
+            this.isAutoMode && this.handleAutoNext()
+        }
+        );
+        t.odds = i,
+        t.winAmount = l,
+        t.profitAmount = l - t.betAmount,
+        delete t.gameValue;
+        let u = t.betId;
+        return this.myBets.find(c=>c.betId === u) || (this.addMyBet(t),
+        this.emit("betEnd", {
+            amount: new g(t.betAmount),
+            odds: t.odds,
+            currencyName: t.currencyName
+        })),
+        t
+    }
+}
+const Gt = new wt;
+window.mineg = Gt;
+export {wt as MineGame, Y as PromiseStatus, v as RoundStatus, Gt as default, B as getRandom};
